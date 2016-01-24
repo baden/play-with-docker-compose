@@ -1,8 +1,18 @@
-FROM python:2.7
-WORKDIR /code
-ADD requirements.txt /code/
-# RUN echo "nameserver 193.41.63.182" > /etc/resolv.conf
-RUN cat /etc/resolv.conf
-RUN pip install -r requirements.txt
-ADD . /code
-CMD python app.py
+# FROM node:4-onbuild
+FROM node
+MAINTAINER Denys Batrak
+
+# RUN npm install --global typescript tsd webpack nodemon
+
+ADD . /app
+# VOLUME ["/app"]
+WORKDIR /app
+
+RUN npm install
+# RUN npm install npm -g && npm install
+
+EXPOSE 3000
+EXPOSE 3001
+
+# CMD ["npm", "start"]
+CMD [ "bash","-c", "npm start" ]
